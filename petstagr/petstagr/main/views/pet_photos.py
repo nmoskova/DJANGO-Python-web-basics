@@ -13,6 +13,14 @@ def photo_details(request, pk):
     return render(request, 'photo_details.html', context)
 
 
+def add_photo(request):
+    return render(request, 'photo_create.html')
+
+
+def edit_photo(request, pk):
+    return render(request, 'photo_edit.html')
+
+
 def like_pet_photo(request, pk):
     pet_photo = PetPhoto.objects.get(pk=pk)
     pet_photo.likes += 1

@@ -30,29 +30,30 @@
                     </div>
                     <p class="mt-2">Total Images: {{ total_images }}</p>
                     <p class="mt-2">Total Likes: {{ total_likes }}</p>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'edit profile' %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'delete profile' %}" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Profile Information -->
 
-    <!-- Pets Information -->
-    <h2 class="text-center">My Pets</h2>
-    <div class="container mb-4">
-        <div class="d-flex justify-content-start mb-5">
-            <!-- Info for each Pet -->
-            {% for pet in pets %}
-                <div style="width: 18rem;">
+    {% if pets %}
+        <!-- Pets Information -->
+        <h2 class="text-center">My Pets</h2>
+        <div class="container mb-4">
+            <div class="d-flex justify-content-start mb-5">
+                <!-- Info for each Pet -->
+                {% for pet in pets %}
+                    <div style="width: 18rem;">
                     <h5>{{ pet.name }}</h5>
                     {% if pet.date_of_birth %}
                         <p class="mt-2">Age: {{ pet.age }}</p>
                     {% endif %}
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+                    <a href="{% url 'edit pet' pet.pk %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'delete pet' pet.pk %}" class="btn btn-danger">Delete</a>
+                    </div>
+                {% endfor %}
+            </div>
+    {% endif %}
 {% endblock %}
