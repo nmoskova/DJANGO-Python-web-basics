@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from petstagr.main.forms.profile import ProfileForm
+from petstagr.main.forms.profile import CreateProfileForm, EditProfileForm, DeleteProfileForm
 from petstagr.main.models.pet_model import Pet
 from petstagr.main.models.pet_photo_model import PetPhoto
 from petstagr.main.views.general import get_profile
@@ -22,25 +22,32 @@ def show_profile(request):
     return render(request, 'profile_details.html', context)
 
 
-def create_profile(request):
+def crud_view(request, form, success_page, template, instance=None):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = form(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('index')
-    form = ProfileForm()
+            return redirect(success_page)
+
+    form = form(instance=instance)
 
     context = {
         'form': form,
     }
-    return render(request, 'profile_create.html', context)
+    return render(request, template, context)
+
+
+def create_profile(request):
+    return crud_view(request, CreateProfileForm, 'index', 'profile_create.html')
 
 
 def edit_profile(request):
-
-    return render(request, 'profile_edit.html')
+    return crud_view(request, EditProfileForm, 'show profile', 'profile_edit.html', get_profile())
 
 
 def delete_profile(request):
-    return render(request, 'profile_delete.html')
+    return crud_view(request, DeleteProfileForm, 'index', 'profile_delete.html', get_profile())
+
+
+
 

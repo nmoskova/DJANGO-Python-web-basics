@@ -67,9 +67,13 @@ class Profile(models.Model):
     gender = models.CharField(
         max_length=max(len(x) for (_, x) in GENDER_CHOICES),
         choices=GENDER_CHOICES,
+        default=DO_NOT_SHOW,
         null=True,
         blank=True,
     )
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+
