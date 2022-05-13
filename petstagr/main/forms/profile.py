@@ -1,6 +1,11 @@
+import datetime
+
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.datetime_safe import date
 
 from petstagr.main.helpers import BootstrapFormMixin
+from petstagr.main.models.pet_photo_model import PetPhoto
 from petstagr.main.models.profile_model import Profile
 
 
@@ -38,9 +43,19 @@ class CreateProfileForm(BootstrapFormMixin, forms.ModelForm):
 
 
 class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
+    MIN_DATE_OF_BIRTH = date(1920, 1, 1)
+    MAX_DATE_OF_BIRTH = date.today()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data['date_of_birth']
+        if date_of_birth < self.MIN_DATE_OF_BIRTH or \
+                date_of_birth > self.MAX_DATE_OF_BIRTH:
+            raise ValidationError(f"Date must be between {self.MIN_DATE_OF_BIRTH} and {self.MAX_DATE_OF_BIRTH}")
+        return date_of_birth
 
     class Meta:
         model = Profile
@@ -87,6 +102,8 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
 
 class DeleteProfileForm(forms.ModelForm):
     def save(self, commit=True):
+        pets = list(self.instance.pet_set.all())
+        PetPhoto.objects.filter(tagged_pets__in=pets).delete()
         self.instance.delete()
         return self.instance
 

@@ -1,3 +1,6 @@
+from django.shortcuts import redirect, render
+
+
 class BootstrapFormMixin:
     fields = {}
 
@@ -8,4 +11,5 @@ class BootstrapFormMixin:
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += 'form-control'
+
 
