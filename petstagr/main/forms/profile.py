@@ -54,7 +54,7 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
         date_of_birth = self.cleaned_data['date_of_birth']
         if date_of_birth < self.MIN_DATE_OF_BIRTH or \
                 date_of_birth > self.MAX_DATE_OF_BIRTH:
-            raise ValidationError(f"Date must be between {self.MIN_DATE_OF_BIRTH} and {self.MAX_DATE_OF_BIRTH}")
+            raise ValidationError(f"Date of birth must be between {self.MIN_DATE_OF_BIRTH} and {self.MAX_DATE_OF_BIRTH}")
         return date_of_birth
 
     class Meta:
@@ -79,11 +79,8 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
                     'placeholder': 'Enter URL',
                 },
             ),
-            'date_of_birth': forms.DateInput(
-                attrs={
-                    'min': '1920-01-01',
-                }
-            ),
+            'date_of_birth': forms.DateField(),
+
             'email': forms.EmailInput(
                 attrs={
                     'placeholder': 'Enter Email',

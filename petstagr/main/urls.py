@@ -1,7 +1,7 @@
 from django.urls import path
 
 from petstagr.main.views.general import show_index, show_dashboard
-from petstagr.main.views.pet_photos import photo_details, like_pet_photo, add_photo, edit_photo
+from petstagr.main.views.pet_photos import photo_details, like_pet_photo, add_photo, edit_photo, delete_pet_photo
 from petstagr.main.views.pets import add_pet, edit_pet, delete_pet
 from petstagr.main.views.profiles import show_profile, create_profile, edit_profile, delete_profile
 
@@ -22,5 +22,6 @@ urlpatterns = (
     path('photo/add/', add_photo, name='add photo'),
     path('photo/edit/<int:pk>/', edit_photo, name='edit photo'),
     path('photo/like/<int:pk>/', like_pet_photo, name='like pet photo'),
+    path('photo/delete/<int:pk>/', delete_pet_photo, name='delete photo')
 
 )

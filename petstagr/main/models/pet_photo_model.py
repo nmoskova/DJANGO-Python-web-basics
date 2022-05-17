@@ -42,3 +42,6 @@ class PetPhoto(models.Model):
     likes = models.IntegerField(
         default=LIKES_DEFAULT,
     )
+
+
+

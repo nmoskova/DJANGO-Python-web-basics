@@ -49,5 +49,8 @@ class Pet(models.Model):
         years = datetime.datetime.now().year - self.date_of_birth.year
         return years
 
+    def __str__(self):
+        return f"{self.name}"
+
     class Meta:
         unique_together = ('user', 'name')
