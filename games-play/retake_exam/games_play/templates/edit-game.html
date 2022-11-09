@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <!-- edit game section -->
+    <section id="create-page" class="auth">
+        <!-- edit game form -->
+        <form method="POST" action="{% url 'edit game' game.pk %}" enctype="multipart/form-data" >
+            <div class="container">
+                <!-- Edit Game paragraph -->
+                <h1>Edit Game</h1>
+
+                {% csrf_token %}
+                {{ form }}
+
+                <!-- edit game button -->
+                <input type="submit" class="btn submit"  value="Edit Game">
+            </div>
+        </form>
+    </section>
+
+{% endblock %}
